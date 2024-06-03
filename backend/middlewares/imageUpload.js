@@ -2,7 +2,7 @@ const multer = require("multer");
 const path = require("path");
 
 //Destination to store image
-const imagege = multer.diskStorage({
+const imageStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     let folder = "";
 
@@ -13,8 +13,8 @@ const imagege = multer.diskStorage({
     }
     cb(null, `uploads/${folder}`);
   },
-  filename: (req, file, cd) => {
-    cb(null, Date.now() + path.extreme(file.originalname));
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname));
   },
 });
 

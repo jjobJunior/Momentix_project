@@ -10,8 +10,10 @@ const authGuard = async (req, res, next) => {
   const authHearder = req.headers["authorization"];
   const token = authHearder && authHearder.split(" ")[1];
 
+  //check if header has a token
   if (!token) return res.status(401).json({ errors: ["Acesso negado!"] });
 
+  //chack if token is valid
   try {
     const verified = jwt.verify(token, jwtSecret);
 

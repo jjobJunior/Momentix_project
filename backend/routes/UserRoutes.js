@@ -7,6 +7,7 @@ const {
   login,
   getCurrentUser,
   update,
+  getUserById,
 } = require("../controllers/UserController");
 
 //mildewares
@@ -31,4 +32,5 @@ router.put(
   update
 );
 
+router.get("/:id", getUserById);
 module.exports = router;

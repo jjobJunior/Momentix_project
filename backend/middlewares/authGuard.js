@@ -1,7 +1,3 @@
-/**
- * import { findById } from "../models/User";
- * import { verify } from "jsonwebtoken";
- */
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const jwtSecret = process.env.JWT_SECRET;

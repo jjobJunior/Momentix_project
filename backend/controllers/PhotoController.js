@@ -51,6 +51,7 @@ const deletePhoto = async (req, res) => {
       res
         .status(422)
         .json({ errors: ["Ocorreu um erro, tente novamente mais tarde!"] });
+      return;
     }
     await Photo.findByIdAndDelete(photo._id);
 
@@ -98,10 +99,44 @@ const getPhotoById = async (req, res) => {
   res.status(200).json(photo);
 };
 
+//Update a photo
+const updatePhoto = async (req, res) => {
+  const { id } = req.params;
+  const { title } = req.body;
+
+  const reqUser = req.user;
+
+  const photo = await Photo.findById(id);
+
+  //check if photo exists
+  if (!photo) {
+    res.status(404).json({ errors: ["Foto não encontrada!"] });
+    return;
+  }
+
+  //check photo belongs to user
+  if (!photo.userId.equals(reqUser._id)) {
+    res
+      .status(422)
+      .json({ errors: ["Ocorreu um erro, tente novamente mais tarde!"] });
+    return;
+  }
+
+  if (title) {
+    photo.title = title;
+  }
+
+  await photo.save();
+  return res
+    .status(200)
+    .json({ photo, message: "Foto atualizada com sucesso!" });
+};
+
 module.exports = {
   insertPhoto,
   deletePhoto,
   gatAllphotos,
   getUserPhotos,
   getPhotoById,
+  updatePhoto,
 };
